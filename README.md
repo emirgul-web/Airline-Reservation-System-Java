@@ -1,48 +1,39 @@
-✈️ Airline Reservation & Management System
-Bu proje, Java programlama dili kullanılarak geliştirilmiş, Nesne Yönelimli Programlama (OOP), çoklu iş parçacığı (multithreading) ve birim test (Unit Testing) pratiklerini içeren kapsamlı bir havayolu yönetim simülasyonudur.
+# ✈️ Airline Reservation & Management System
 
-🚀 Öne Çıkan Teknik Özellikler
-🧵 Çoklu İş Parçacığı (Multithreading) ve Eşzamanlılık
-Projede iki ana eşzamanlı çalışma senaryosu uygulanmıştır:
+![Language](https://img.shields.io/badge/Language-Java-red)
+![Concurrency](https://img.shields.io/badge/Concurrency-Multithreading-orange)
+![Interface](https://img.shields.io/badge/UI-Swing-blue)
 
+Bu proje, **Java** programlama dili kullanılarak geliştirilmiş, çoklu iş parçacığı (multithreading) ve Nesne Yönelimli Programlama (OOP) prensiplerini temel alan kapsamlı bir havayolu yönetim simülasyonudur.
 
-Simültane Rezervasyon Kontrolü: 90 yolcunun (thread) aynı anda rastgele koltuk seçimi yaptığı senaryoda, synchronized yapısı kullanılarak "Race Condition" engellenmiş ve veri tutarlılığı sağlanmıştır.
+Sistem, gerçek zamanlı koltuk rezervasyonunu simüle ederken **Race Condition** (Yarış Durumu) gibi eşzamanlılık problemlerini `synchronized` blokları ile çözer.
 
+## 🚀 Proje Özellikleri
 
-Asenkron Raporlama: ReportGenerator sınıfı, Runnable arayüzü ile ağır raporlama işlemlerini ana GUI'yi bloklamadan arka planda yürütür.
+Standart otomasyonlardan farklı olarak bu projede şu teknik mimariler kurulmuştur:
 
-🏗️ Yazılım Mimarisi (OOP)
-Sistem, esnek ve sürdürülebilir bir yapı için Nesne Yönelimli Programlama prensipleri üzerine inşa edilmiştir:
-+1
+* **Eşzamanlı Rezervasyon Motoru:** 90 farklı yolcuyu temsil eden thread'ler aynı anda sisteme giriş yapıp koltuk seçmeye çalışır. Veri tutarlılığı (Data Consistency) %100 sağlanmıştır.
+* **OOP Mimarisi:** Uçak, Koltuk ve Yolcu arasındaki ilişkiler **Composition** (Bileşim) ve **Aggregation** (Kümeleme) prensiplerine göre tasarlanmıştır.
+* **Asenkron Raporlama:** Raporlama işlemleri ana arayüzü (UI) dondurmadan arka planda (`Runnable`) çalışır.
+* **Dinamik Fiyatlandırma:** Business ve Ekonomi sınıfları için ayrı fiyat hesaplama algoritmaları içerir.
 
+## 🧠 Algoritma Mantığı
 
-Bileşim (Composition): Plane ve Seat arasındaki ilişki ile koltukların uçağın ayrılmaz bir parçası olması sağlanmıştır.
+Sistemin kalbi olan **"Thread-Safe Rezervasyon"** şu şekilde işler:
 
+1.  **Talep:** Birden fazla Thread (Yolcu) aynı anda `X` numaralı koltuğu talep eder.
+2.  **Kilit (Lock):** İlk gelen Thread, `reserveSeat()` metodunu kilitler (`synchronized`).
+3.  **Kontrol:** Algoritma koltuğun `isBooked` durumunu kontrol eder.
+4.  **İşlem:** Eğer boşsa, koltuk o yolcuya atanır ve veritabanı güncellenir. Doluysa, diğer Thread'e hata fırlatılır.
 
-Kümeleme (Aggregation): Flight ve Plane arasındaki bağımsız varlık ilişkisi kurgulanmıştır.
+## 📂 Proje Yapısı
 
-Merkezi Yönetim: Reservation sınıfı; Flight, Passenger ve Seat nesnelerini bir araya getiren merkezi bir bağlayıcı görevi görür.
-
-🧪 Kalite ve Test (JUnit 5)
-Sistemin kritik fonksiyonları 5 ana test senaryosu ile doğrulanmıştır:
-
-Fiyat hesaplama mantığı (Ekonomi vs Business sınıfı farkları).
-
-Şehir bazlı uçuş filtreleme motoru.
-
-Rezervasyon sonrası koltuk sayısının doğru azalışı.
-
-Hata yönetimi (Olmayan koltuk için istisna fırlatılması).
-
-🛠️ Kullanılan Teknolojiler
-
-Dil: Java (JDK 17+) 
-
-
-Arayüz: Java Swing (Desktop UI) 
-
-
-Test: JUnit 5 
-
-
-Veri Depolama: Java Serialization (.dat dosyaları üzerinden kalıcı saklama)
+```bash
+Airline-Reservation-System/
+├── src/
+│   ├── main/           # Core Logic, Models (Plane, Seat, Passenger)
+│   ├── ui/             # Java Swing arayüz kodları
+│   └── util/           # Helper sınıflar ve Database bağlantıları
+├── test/               # JUnit 5 test senaryoları
+├── data/               # .dat uzantılı serileştirilmiş veriler
+└── README.md
