@@ -26,14 +26,4 @@ Sistemin kalbi olan **"Thread-Safe Rezervasyon"** şu şekilde işler:
 3.  **Kontrol:** Algoritma koltuğun `isBooked` durumunu kontrol eder.
 4.  **İşlem:** Eğer boşsa, koltuk o yolcuya atanır ve veritabanı güncellenir. Doluysa, diğer Thread'e hata fırlatılır.
 
-## 📂 Proje Yapısı
 
-```bash
-Airline-Reservation-System/
-├── src/
-│   ├── main/           # Core Logic, Models (Plane, Seat, Passenger)
-│   ├── ui/             # Java Swing arayüz kodları
-│   └── util/           # Helper sınıflar ve Database bağlantıları
-├── test/               # JUnit 5 test senaryoları
-├── data/               # .dat uzantılı serileştirilmiş veriler
-└── README.md
